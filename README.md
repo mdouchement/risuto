@@ -27,11 +27,6 @@ $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
 - **production**
 
 ```bash
-```
-
-or
-
-```bash
 # Using Docker
 $ docker run -p 5000:5000 -d mdouchement/risuto
 # or
