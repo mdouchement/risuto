@@ -1,0 +1,12 @@
+package: github.com/mdouchement/risuto
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/caarlos0/env
+- package: github.com/gin-gonic/gin
+- package: github.com/x-cray/logrus-prefixed-formatter
+- package: gopkg.in/urfave/cli.v2
+- package: github.com/HouzuoGuo/tiedot
+  subpackages:
+  - db
+  - dberr
+- package: github.com/fatih/structs

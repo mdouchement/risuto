@@ -1,0 +1,47 @@
+hash: 65d1baf08006a5095a537dc1975d4e3ba7cc4eb8c6dd6ad88b2de955925803d4
+updated: 2016-06-02T17:24:36.947902325+02:00
+imports:
+- name: github.com/caarlos0/env
+  version: b060a60369b6229a029f8a1ddae75bb107a7d2db
+- name: github.com/fatih/structs
+  version: 5ada2f449b108d87dbd8c1e60c32cdd065c27886
+- name: github.com/gin-gonic/gin
+  version: f931d1ea80ae95a6fc739213cdd9399bd2967fb6
+  subpackages:
+  - binding
+  - render
+- name: github.com/golang/protobuf
+  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  subpackages:
+  - proto
+- name: github.com/HouzuoGuo/tiedot
+  version: e1426aa6a9e4e03e529841286de45bd84776280b
+  subpackages:
+  - db
+  - dberr
+  - data
+  - tdlog
+  - gommap
+- name: github.com/manucorporat/sse
+  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
+- name: github.com/mgutz/ansi
+  version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
+- name: github.com/Sirupsen/logrus
+  version: f3cfb454f4c209e6668c95216c4744b8fddb2356
+- name: github.com/x-cray/logrus-prefixed-formatter
+  version: 19bfe61502ba35a3235b4970c10b9366a0aa9b61
+- name: golang.org/x/net
+  version: f315505cf3349909cdf013ea56690da34e96a451
+  subpackages:
+  - context
+- name: golang.org/x/sys
+  version: 076b546753157f758b316e59bcb51e6807c04057
+  subpackages:
+  - unix
+- name: gopkg.in/go-playground/validator.v8
+  version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: gopkg.in/urfave/cli.v2
+  version: 2f3de598bfaffd51808189c45d4cb2ca442d2896
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
+devImports: []
