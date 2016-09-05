@@ -12,7 +12,7 @@ import (
 func IndexHome(c *gin.Context) {
 	c.HTML(http.StatusOK, "home.index.tmpl", gin.H{
 		"namespace": config.Cfg.Namespace,
-		// "base":      "https://npmcdn.com",
+		// "base":      "https://unpkg.com",
 		"base": filepath.Join(config.Cfg.Namespace, "/public/js/vendor"),
 	})
 }
