@@ -18,7 +18,7 @@ $ glide install
 - **development**
 
 ```bash
-$ go run ritsu.go -p 5000
+$ go run risuto.go -p 5000
 
 # Before pushing to Github
 $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
