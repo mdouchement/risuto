@@ -5,8 +5,15 @@ import { ItemService } from './item.service';
 
 @Component({
   selector: 'risuto-item',
+  styles: [`
+    .focused-item {
+      background-color: #fafbfb;
+      border: 2px solid #cacaca;
+      box-shadow: 0 2px #cacaca;
+    }
+  `],
   template: `
-    <div class="callout">
+    <div class="callout" [class.focused-item]="item.isActive">
       <div class="row">
         <div class="columns">{{item.name}}</div>
         <div class="columns">
@@ -17,7 +24,7 @@ import { ItemService } from './item.service';
           </div>
         </div>
       </div>
-      <div [ngClass]="{hide: !item.isActive}">
+      <div [class.hide]="!item.isActive">
         <div class="row">
           <div class="columns">
             <ul *ngFor="let description of item.descriptions">
