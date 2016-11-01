@@ -15,7 +15,7 @@ import { ItemService } from './item.service';
   template: `
     <div class="callout" [class.focused-item]="item.isActive">
       <div class="row">
-        <div class="columns">{{item.name}}</div>
+        <div class="columns"><strong>{{item.name}}</strong></div>
         <div class="columns">
           <div class="float-right button-group tiny">
             <div class="secondary hollow label">{{item.score}}</div>
