@@ -29,7 +29,7 @@ import { NewItemComponent } from './new-item.component';
     <header>
       <div class="row align-middle">
         <div class="column">
-          <h4>Risuto</h4>
+          <h4 class="cursor-pointer" (click)="clearFilter()">Risuto</h4>
         </div>
         <div class="column">
           <button type="button" class="button" (click)="newItem.activate()">+</button>
@@ -45,6 +45,10 @@ import { NewItemComponent } from './new-item.component';
 
 export class AppComponent {
   @ViewChild(ItemsComponent) items:ItemsComponent; // Child accessor
+
+  clearFilter() {
+    this.items.itemFilter = "";
+  }
 
   close(item: Item) {
     if (item) { this.items.getItems(); }
