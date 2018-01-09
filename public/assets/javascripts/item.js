@@ -64,6 +64,9 @@ Vue.component('item', {
       }
     })
   },
+  beforeDestroy() {
+    bus.$emit('item-selected', 'none')
+  },
   watch: {
     isOpen: function(active) {
       if (active) {

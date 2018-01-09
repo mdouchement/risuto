@@ -1,5 +1,5 @@
 <div id="app">
-  <section class="hero is-fullheight is-default is-bold">
+  <section class="hero is-fullheight is-default is-flex is-bold">
     <div class="hero-head">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="container">
@@ -14,16 +14,14 @@
           </div>
         </div>
       </nav>
+    </div>
+    <div class="hero-body">
       <new-item v-bind:active="inNewItem" v-on:closed="inNewItem = false" v-on:created="appendItem"></new-item>
-      <main>
-        <div class="hero-body">
-          <div class="container">
-            <div v-for="item of sortedItems">
-              <item v-bind:item="item" v-on:deleted="removeItem"></item>
-            </div>
-          </div>
+      <div class="container">
+        <div v-for="item of sortedItems">
+          <item v-bind:item="item" v-on:deleted="removeItem"></item>
         </div>
-      </main>
+      </div>
     </div>
   </section>
 </div>
