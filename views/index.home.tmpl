@@ -19,9 +19,7 @@
         <div class="hero-body">
           <div class="container">
             <div v-for="item of sortedItems">
-              <bulma-accordion accordion animation="spin">
-                <item v-bind:item="item" v-on:deleted="removeItem"></item>
-              </bulma-accordion>
+              <item v-bind:item="item" v-on:deleted="removeItem"></item>
             </div>
           </div>
         </div>

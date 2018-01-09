@@ -29,3 +29,7 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.x-item {
+  border: 1px solid #cacaca;
+}

@@ -2,6 +2,12 @@
 
 Simple wishlist web application
 
+## Technologies
+
+- [Golang](https://golang.org/)
+- [Vue.js](https://vuejs.org/)
+- [Bulma](https://bulma.io/) (Formally [Buefy](https://buefy.github.io) wrapper)
+
 ## Requirements
 
 - Golang 1.9.x

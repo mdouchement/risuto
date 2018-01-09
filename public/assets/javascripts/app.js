@@ -1,7 +1,7 @@
 // Vue.config.devtools = true
 
-// Global stuff
-Vue.use(VueBulmaAccordion)
+// Global variable
+Vue.use(Buefy.default, { defaultIconPack: 'fa' })
 
 // App
 let app = new Vue({
