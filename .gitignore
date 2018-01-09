@@ -3,8 +3,12 @@
 !/log/.keep
 /vendor
 /tmp
+/dist
 
 tags
 
 # ~ files
 *.*~
+
+# Generated files
+*-packr.go

@@ -2,13 +2,20 @@
 
 Simple wishlist web application
 
+## Technologies
+
+- [Golang](https://golang.org/)
+- [Vue.js](https://vuejs.org/)
+- [Bulma](https://bulma.io/) (Formally [Buefy](https://buefy.github.io) wrapper)
+
 ## Requirements
 
-- Golang 1.6.x
+- Golang 1.9.x
 
 ## Installation
 
 ```bash
+$ go get -u github.com/gobuffalo/packr/...
 $ go get github.com/Masterminds/glide
 $ glide install
 ```
@@ -18,7 +25,9 @@ $ glide install
 - **development**
 
 ```bash
-$ go run risuto.go -p 5000
+$ make live-reload
+# old fashion
+$ go run risuto.go server -p 5000
 
 # Before pushing to Github
 $ find . -name '*.go' -not -path './vendor*' -exec go fmt {} \;
@@ -34,8 +43,9 @@ $ docker run -v /data:/data -p 5000:5000 -d mdouchement/risuto
 
 # Baremetal
 
-$ go build risuto.go
-$ ./risuto -p 5000
+$
+$ packr build risuto.go
+$ ./risuto server -p 5000
 ```
 > Environment variables https://github.com/mdouchement/risuto/blob/master/config/config.go
 

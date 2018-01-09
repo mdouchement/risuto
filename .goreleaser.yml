@@ -1,0 +1,19 @@
+project_name: risuto
+release:
+  github:
+    owner: mdouchement
+    name: risuto
+builds:
+- goos:
+  - linux
+  goarch:
+  - amd64
+  main: risuto.go
+  ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+  binary: risuto
+snapshot:
+  name_template: 'SNAPSHOT-{{ printf "%.7s" .Commit }}'
+archive:
+  files:
+    - LICENSE
+    - README.md

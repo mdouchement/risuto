@@ -1,47 +1,85 @@
-hash: 65d1baf08006a5095a537dc1975d4e3ba7cc4eb8c6dd6ad88b2de955925803d4
-updated: 2016-06-02T17:24:36.947902325+02:00
+hash: 4ec3ce58d8690359ae4f84f881d360d71bcd58f8d5f33c6815ac3c4afba6578d
+updated: 2017-12-01T21:59:59.937661178+01:00
 imports:
 - name: github.com/caarlos0/env
-  version: b060a60369b6229a029f8a1ddae75bb107a7d2db
-- name: github.com/fatih/structs
-  version: 5ada2f449b108d87dbd8c1e60c32cdd065c27886
-- name: github.com/gin-gonic/gin
-  version: f931d1ea80ae95a6fc739213cdd9399bd2967fb6
+  version: 9de094f90fa8a13dc162e10ae8a3b95c0c2c33e1
+- name: github.com/gobuffalo/packr
+  version: 54c75d3f96df71de343c9a2048f7623620352802
+- name: github.com/gobuffalo/envy
+  version: e613c80275b86293880eddeb27417c9a7c670ff3
+- name: github.com/joho/godotenv
+  version: a79fa1e548e2c689c241d10173efd51e5d689d5b
+- name: github.com/dgrijalva/jwt-go
+  version: 24c63f56522a87ec5339cc3567883f1039378fdb
+- name: github.com/labstack/echo
+  version: 0473c51f1dbd83487effce00702571d19033a6e5
   subpackages:
-  - binding
-  - render
-- name: github.com/golang/protobuf
-  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  - middleware
+- name: github.com/labstack/gommon
+  version: 57409ada9da0f2afad6664c49502f8c50fbd8476
   subpackages:
-  - proto
+  - bytes
+  - color
+  - log
+  - random
+- name: github.com/mattn/go-colorable
+  version: 167de6bfdfba052fa6b2d3664c8f5272e23c9072
+- name: github.com/mattn/go-isatty
+  version: 0360b2af4f38e8d38c7fce2a9f4e702702d73a39
+- name: github.com/mgutz/ansi
+  version: 9520e82c474b0a04dd04f8a40959027271bab992
+- name: github.com/rsc/letsencrypt
+  version: 76104d26167d38b6a0010f42bfc8ec5487742e8b
+- name: github.com/sirupsen/logrus
+  version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
+- name: github.com/tylerb/graceful
+  version: 50a48b6e73fcc75b45e22c05b79629a67c79e938
+- name: github.com/valyala/bytebufferpool
+  version: e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7
+- name: github.com/valyala/fasttemplate
+  version: dcecefd839c4193db0d35b88ec65b4c12d360ab0
+- name: github.com/x-cray/logrus-prefixed-formatter
+  version: bb2702d423886830dee131692131d35648c382e2
+- name: golang.org/x/crypto
+  version: 94eea52f7b742c7cbe0b03b22f0c4c8631ece122
+  subpackages:
+  - acme
+  - acme/autocert
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: 8b4580aae2a0dd0c231a45d3ccb8434ff533b840
+  subpackages:
+  - unix
+  - windows
+- name: gopkg.in/asaskevich/govalidator.v5
+  version: 7b3beb6df3c42abd3509abfc3bcacc0fbfb7c877
+- name: gopkg.in/urfave/cli.v2
+  version: b2bf3c5abeb90da407891aecd1df2c5a1f6170c1
 - name: github.com/HouzuoGuo/tiedot
-  version: e1426aa6a9e4e03e529841286de45bd84776280b
+  version: 96fa90b5e4620f677d2737bc5358329040942adb
   subpackages:
   - db
   - dberr
-  - data
-  - tdlog
-  - gommap
-- name: github.com/manucorporat/sse
-  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
-- name: github.com/mgutz/ansi
-  version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
-- name: github.com/Sirupsen/logrus
-  version: f3cfb454f4c209e6668c95216c4744b8fddb2356
-- name: github.com/x-cray/logrus-prefixed-formatter
-  version: 19bfe61502ba35a3235b4970c10b9366a0aa9b61
-- name: golang.org/x/net
-  version: f315505cf3349909cdf013ea56690da34e96a451
+- name: github.com/pkg/errors
+  version: v0.8.0
+- name: github.com/fatih/structs
+  version: v1.0.0
+- name: github.com/tdewolff/minify
+  version: 222672169d634c440a73abc47685074e1a9daa60
   subpackages:
-  - context
-- name: golang.org/x/sys
-  version: 076b546753157f758b316e59bcb51e6807c04057
+  - css
+  - html
+  - js
+  - json
+  - svg
+  - xml
+- name: github.com/tdewolff/parse
+  version: 639f6272aec6b52094db77b9ec488214b0b4b1a1
   subpackages:
-  - unix
-- name: gopkg.in/go-playground/validator.v8
-  version: c193cecd124b5cc722d7ee5538e945bdb3348435
-- name: gopkg.in/urfave/cli.v2
-  version: 2f3de598bfaffd51808189c45d4cb2ca442d2896
-- name: gopkg.in/yaml.v2
-  version: a83829b6f1293c91addabc89d0571c246397bbf4
-devImports: []
+  - css
+  - html
+  - js
+  - json
+  - svg
+  - xml
+testImports: []

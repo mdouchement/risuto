@@ -1,0 +1,27 @@
+<div id="app">
+  <section class="hero is-fullheight is-default is-flex is-bold">
+    <div class="hero-head">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="container">
+          <div class="navbar-brand">
+            <h4 class="navbar-item cursor-pointer" v-on:click="clearFilter()">『Risuto』</h4>
+          </div>
+          <div class="navbar-menu">
+            <div class="navbar-end">
+              <button type="button" class="button" v-on:click="newItem()">+</button>
+              <input class="input no-border-radius" v-model="filter" type="search" placeholder="Search">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="hero-body">
+      <new-item v-bind:active="inNewItem" v-on:closed="inNewItem = false" v-on:created="appendItem"></new-item>
+      <div class="container">
+        <div v-for="item of sortedItems">
+          <item v-bind:item="item" v-on:deleted="removeItem"></item>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

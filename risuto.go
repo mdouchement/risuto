@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/mdouchement/risuto/config"
@@ -8,36 +9,25 @@ import (
 	"gopkg.in/urfave/cli.v2"
 )
 
+var (
+	version = "dev"
+	app     *cli.App
+)
+
+func init() {
+	config.Cfg.Version = version
+
+	app = &cli.App{
+		Name:    "risuto",
+		Version: config.Cfg.Version,
+		Commands: []*cli.Command{
+			web.Command,
+		},
+	}
+}
+
 func main() {
-	app := cli.NewApp()
-	app.Name = "Risuto"
-	app.Version = config.Cfg.Version
-	app.Usage = "Wishlist webserver"
-	// TODO add subcommands `server` and `database`
-	app.Flags = flags
-	app.Action = action
-
-	err := app.Run(os.Args)
-	if err != nil {
-		println(err)
+	if err := app.Run(os.Args); err != nil {
+		fmt.Println(err)
 	}
-}
-
-var flags = []cli.Flag{
-	&cli.StringFlag{
-		Name:  "p, port",
-		Usage: "Specify the port to listen to.",
-	},
-	&cli.StringFlag{
-		Name:  "b, binding",
-		Usage: "Binds server to the specified IP.",
-	},
-}
-
-func action(context *cli.Context) error {
-	port := context.String("p")
-	if port == "" {
-		port = "5000"
-	}
-	return web.Server(context.String("b"), port)
 }
