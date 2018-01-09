@@ -2,17 +2,13 @@ package controllers
 
 import (
 	"net/http"
-	"path/filepath"
 
-	"github.com/gin-gonic/gin"
-	"github.com/mdouchement/risuto/config"
+	"github.com/labstack/echo"
 )
 
-// IndexHome renders Risuto veropn
-func IndexHome(c *gin.Context) {
-	c.HTML(http.StatusOK, "home.index.tmpl", gin.H{
-		"namespace": config.Cfg.Namespace,
-		// "base":      "https://unpkg.com",
-		"base": filepath.Join(config.Cfg.Namespace, "/public/js/vendor"),
-	})
+// IndexHome renders application home page.
+func IndexHome(c echo.Context) error {
+	c.Set("handler_method", "IndexHome")
+
+	return c.Render(http.StatusOK, "index.home.tmpl", echo.Map{})
 }

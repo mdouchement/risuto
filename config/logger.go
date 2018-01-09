@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	prefixer "github.com/x-cray/logrus-prefixed-formatter"
 )
 

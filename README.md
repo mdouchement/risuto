@@ -4,7 +4,7 @@ Simple wishlist web application
 
 ## Requirements
 
-- Golang 1.6.x
+- Golang 1.9.x
 
 ## Installation
 

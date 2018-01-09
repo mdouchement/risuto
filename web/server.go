@@ -2,36 +2,125 @@ package web
 
 import (
 	"fmt"
-	"path/filepath"
+	"net/http"
+	"regexp"
+	"strings"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gobuffalo/packr"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/mdouchement/risuto/config"
 	"github.com/mdouchement/risuto/controllers"
 	"github.com/mdouchement/risuto/web/middlewares"
+	"github.com/tdewolff/minify"
+	"github.com/tdewolff/minify/css"
+	"github.com/tdewolff/minify/html"
+	"github.com/tdewolff/minify/json"
+	"github.com/tdewolff/minify/svg"
+	"github.com/tdewolff/minify/xml"
+	"gopkg.in/urfave/cli.v2"
 )
 
-// Server routes all requests to controllers
-func Server(binding, port string) error {
-	engine := gin.New()
-	engine.Use(gin.Recovery())
-	engine.Use(middlewares.Ginrus(config.Log))
-	engine.Use(middlewares.ParamsConverter())
+var (
+	// Command defines the server command (CLI).
+	Command = &cli.Command{
+		Name:    "server",
+		Aliases: []string{"s"},
+		Usage:   "start server",
+		Action:  action,
+		Flags:   flags,
+	}
 
-	engine.LoadHTMLGlob("views/*")
+	flags = []cli.Flag{
+		&cli.StringFlag{
+			Name:  "p, port",
+			Usage: "Specify the port to listen to.",
+		},
+		&cli.StringFlag{
+			Name:  "b, binding",
+			Usage: "Binds server to the specified IP.",
+		},
+	}
 
-	router := engine.Group(namespace("/"))
-	router.Static("/public", "public")
-	router.GET("/", controllers.IndexHome)
-	router.GET("/version", controllers.ShowVersion)
-	middlewares.CRUD(router, "/items", controllers.NewItems())
+	assets = packr.NewBox("../public")
+)
 
-	listener := fmt.Sprintf("%s:%s", binding, port)
-	config.Log.Infof("Server listening on %s", listener)
-	engine.Run(listener)
+func action(context *cli.Context) error {
+
+	engine := EchoEngine()
+	printRoutes(engine)
+
+	listen := fmt.Sprintf("%s:%s", context.String("b"), context.String("p"))
+	config.Log.Infof("Server listening on %s", listen)
+	engine.Start(listen)
 
 	return nil
 }
 
-func namespace(route string) string {
-	return filepath.Join(config.Cfg.Namespace, route)
+// EchoEngine instanciates the LSS server.
+func EchoEngine() *echo.Echo {
+	engine := echo.New()
+	engine.Use(middleware.Recover())
+	engine.Use(middlewares.Echorus(config.Log))
+	// Error handler
+	engine.HTTPErrorHandler = middlewares.HTTPErrorHandler
+	// Views templates
+	engine.Renderer = templates
+	// Strong parameters
+	engine.Validator = &controllers.ParamsValidator{}
+
+	router := engine.Group(config.Cfg.RouterNamespace)
+
+	// Assets
+	router.Use(assetsFS("/public", assets))
+
+	router.GET("/version", controllers.Version)
+	router.GET("/", controllers.IndexHome)
+	middlewares.CRUD(router, "/items", controllers.NewItems())
+
+	return engine
+}
+
+func assetsFS(urlPrefix string, assets packr.Box) echo.MiddlewareFunc {
+	var fs http.Handler = http.FileServer(assets)
+
+	if config.Env() == config.Production {
+		m := minify.New()
+		m.AddFunc("text/css", css.Minify)
+		m.AddFunc("text/html", html.Minify)
+		m.AddFunc("application/javascript", minifyVueJS)
+		m.AddFunc("application/x-javascript", minifyVueJS)
+		m.AddFunc("image/svg+xml", svg.Minify)
+		m.AddFuncRegexp(regexp.MustCompile("[/+]json$"), json.Minify)
+		m.AddFuncRegexp(regexp.MustCompile("[/+]xml$"), xml.Minify)
+		fs = m.Middleware(fs)
+	}
+
+	return func(before echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			err := before(c)
+			if err != nil {
+				if c, ok := err.(*echo.HTTPError); !ok || c.Code != http.StatusNotFound {
+					return err
+				}
+			}
+
+			w, r := c.Response(), c.Request()
+
+			p := strings.TrimPrefix(r.URL.Path, urlPrefix)
+			if !w.Committed && assets.Has(p) {
+				r.URL.Path = p
+				fs.ServeHTTP(w, r)
+				return nil
+			}
+			return nil
+		}
+	}
+}
+
+func printRoutes(e *echo.Echo) {
+	fmt.Println("Routes:")
+	for _, route := range e.Routes() {
+		fmt.Printf("%6s %s\n", route.Method, route.Path)
+	}
 }
