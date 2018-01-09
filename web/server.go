@@ -82,7 +82,8 @@ func EchoEngine() *echo.Echo {
 }
 
 func assetsFS(urlPrefix string, assets packr.Box) echo.MiddlewareFunc {
-	var fs http.Handler = http.FileServer(assets)
+	var fs = http.FileServer(assets)
+	var fsm = fs
 
 	if config.Env() == config.Production {
 		m := minify.New()
@@ -93,7 +94,7 @@ func assetsFS(urlPrefix string, assets packr.Box) echo.MiddlewareFunc {
 		m.AddFunc("image/svg+xml", svg.Minify)
 		m.AddFuncRegexp(regexp.MustCompile("[/+]json$"), json.Minify)
 		m.AddFuncRegexp(regexp.MustCompile("[/+]xml$"), xml.Minify)
-		fs = m.Middleware(fs)
+		fsm = m.Middleware(fs)
 	}
 
 	return func(before echo.HandlerFunc) echo.HandlerFunc {
@@ -110,7 +111,11 @@ func assetsFS(urlPrefix string, assets packr.Box) echo.MiddlewareFunc {
 			p := strings.TrimPrefix(r.URL.Path, urlPrefix)
 			if !w.Committed && assets.Has(p) {
 				r.URL.Path = p
-				fs.ServeHTTP(w, r)
+				if strings.Contains(p, ".min.") {
+					fs.ServeHTTP(w, r)
+				} else {
+					fsm.ServeHTTP(w, r)
+				}
 				return nil
 			}
 			return nil

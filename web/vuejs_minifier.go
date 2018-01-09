@@ -1,5 +1,6 @@
-// imported from https://github.com/tdewolff/minify/tree/master/js
 package web
+
+// imported from https://github.com/tdewolff/minify/tree/master/js
 
 import (
 	"bytes"
