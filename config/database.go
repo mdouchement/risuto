@@ -17,8 +17,10 @@ func init() {
 		check(err)
 	}
 
-	// Repair and compact
-	DB.Scrub("items")
+	if Env() == Production {
+		// Repair and compact
+		DB.Scrub("items")
+	}
 }
 
 func contains(s []string, e string) bool {

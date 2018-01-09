@@ -3,6 +3,7 @@
   padding: .5rem;
   margin-bottom: 2rem;
 }
+
 .navbar button {
   border-radius: 50%;
   height: 36px;
@@ -13,6 +14,7 @@
   color: white;
   font-weight: bold;
 }
+
 .navbar input {
   top: 4px;
   margin-bottom: 0;
