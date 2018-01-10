@@ -50,7 +50,8 @@ let app = new Vue({
   },
   computed: {
     sortedItems: function() {
-      return _.filter(this.items, i => _.startsWith(i.name, this.filter))
+      let filter = _.toLower(this.filter)
+      return _.filter(this.items, i => _.startsWith(_.toLower(i.name), filter))
     }
   }
 })
