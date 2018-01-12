@@ -1,6 +1,6 @@
 Vue.component('new-item', {
   template: `
-    <div class="container card" v-if="active">
+    <div class="container card x-item" v-if="active">
       <div class="card-content">
         <div class="field is-horizontal">
           <div class="field-label">
@@ -51,6 +51,11 @@ Vue.component('new-item', {
     },
     create: function() {
       let self = this
+      let descriptions = []
+      if (this.description !== '') {
+        descriptions = [this.description]
+      }
+
       axios.post('/items', {
         headers: {
           'Content-type': 'application/json',
@@ -58,7 +63,7 @@ Vue.component('new-item', {
         },
         // Data
         name: self.name,
-        descriptions: [self.description]
+        descriptions: descriptions
       })
       .then(function(response) {
         self.$emit('created', response.data)

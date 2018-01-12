@@ -8,16 +8,16 @@ Vue.component('item', {
           {{item.name}} ・ {{item.score}}
         </p>
         <a class="card-header-icon">
-          <b-icon :icon="isOpen ? 'angle-down' : 'angle-up'"></b-icon>
+          <b-icon v-bind:icon="isOpen ? 'angle-down' : 'angle-up'"></b-icon>
         </a>
       </div>
       <div class="card-content">
         <div class="content">
           <div class="level">
             <div class="level-left">
-              <ul>
-                <li v-for="descrition of item.descriptions">{{descrition}}</li>
-              </ul>
+              <button v-bind:id="copyButtonID" class="button is-small" v-bind:data-clipboard-text="item.name">
+                <b-icon icon="clipboard"></b-icon>
+              </button>
             </div>
             <div class="level-right">
               <div class="field is-grouped">
@@ -26,6 +26,12 @@ Vue.component('item', {
                 <div class="button is-outlined is-small" v-on:click="inc()">+</div>
               </div>
             </div>
+          </div>
+
+          <div class="field">
+            <ul>
+              <li v-for="descrition of item.descriptions">{{descrition}}</li>
+            </ul>
           </div>
 
           <div class="field is-grouped">
@@ -53,25 +59,42 @@ Vue.component('item', {
       isOpen: false,
       deleteMessages: ["Delete", "Sure?"],
       deleteMessageIndex: 0,
-      tmpDescription: ''
+      tmpDescription: '',
+      clipboard: null
     }
   },
   mounted() {
     let self = this
     bus.$on('item-selected', function(id) {
-      if (self.isOpen && self.item.id !== id) {
-        self.isOpen = false
-      }
+      self.isOpen = self.item.id === id
     })
   },
   beforeDestroy() {
-    bus.$emit('item-selected', 'none')
+    if (this.clipboard === null) {
+      this.clipboard.destroy()
+    }
+    bus.$emit('item-selected', 'collapse-all')
   },
   watch: {
     isOpen: function(active) {
+      if (this.clipboard === null) {
+        this.clipboard = new Clipboard(`#${this.copyButtonID}`) // Only on-demand
+      }
+
       if (active) {
         bus.$emit('item-selected', this.item.id)
       }
+    },
+    deleteMessageIndex: function(index) {
+      if (index > 0) {
+        let self = this
+        _.delay(function() { self.deleteMessageIndex = 0 }, 1000)
+      }
+    }
+  },
+  computed: {
+    copyButtonID: function() {
+      return `item-button-${this.item.id}`
     }
   },
   methods: {
