@@ -70,7 +70,7 @@ Vue.component('item', {
     })
   },
   beforeDestroy() {
-    if (this.clipboard === null) {
+    if (this.clipboard !== null) {
       this.clipboard.destroy()
     }
     bus.$emit('item-selected', 'collapse-all')

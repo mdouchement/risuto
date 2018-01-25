@@ -12,6 +12,7 @@ type (
 	itemParams struct {
 		ResourceName string   `json:"-"` // Used for error formating
 		Name         string   `json:"name" valid:"required~required"`
+		Category     string   `json:"category" valid:"required~required"`
 		Descriptions []string `json:"descriptions" structs:"descriptions"`
 		Score        int      `json:"score" structs:"score"`
 	}
@@ -50,6 +51,9 @@ func (is *Items) Create(c echo.Context) error {
 		return err
 	}
 
+	// Synchronize category collection
+	models.IncrementCategory(item.Category)
+
 	return c.JSON(http.StatusCreated, item)
 }
 
@@ -81,6 +85,12 @@ func (is *Items) Update(c echo.Context) error {
 		return err
 	}
 
+	// Synchronize category collection
+	if params.Category != item.Category {
+		models.IncrementCategory(params.Category)
+		models.DecrementCategory(item.Category)
+	}
+
 	// Update attributes
 	if err := MergeParams(item, params); err != nil {
 		return err
@@ -104,6 +114,9 @@ func (is *Items) Delete(c echo.Context) error {
 	if err := item.Delete(); err != nil {
 		return err
 	}
+
+	// Synchronize category collection
+	models.DecrementCategory(item.Category)
 
 	return c.NoContent(http.StatusNoContent)
 }

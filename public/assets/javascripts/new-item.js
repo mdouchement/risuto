@@ -12,6 +12,22 @@ Vue.component('new-item', {
         </div>
         <div class="field is-horizontal">
           <div class="field-label">
+            <label class="label">Category</label>
+          </div>
+          <div class="field-body is-expanded">
+            <b-select placeholder="Select a category" v-model="category">
+                <option
+                    v-for="category in categories"
+                    v:bind:value="category"
+                    v-bind:key="category">
+                    {{ category }}
+                </option>
+            </b-select>
+            <input v-model="category" class="input" type="text" placeholder="Or write a new one">
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label">
             <label class="label">Description</label>
           </div>
           <div class="field-body is-expanded">
@@ -34,17 +50,23 @@ Vue.component('new-item', {
     active: {
       type: Boolean,
       default: false
+    },
+    categories: {
+      type: Array,
+      default: []
     }
   },
   data: function() {
     return {
       name: '',
+      category: null,
       description: ''
     }
   },
   methods: {
     goBack: function() {
       this.name = ''
+      this.category = ''
       this.description = ''
 
       this.$emit('closed')
@@ -63,6 +85,7 @@ Vue.component('new-item', {
         },
         // Data
         name: self.name,
+        category: self.category,
         descriptions: descriptions
       })
       .then(function(response) {
