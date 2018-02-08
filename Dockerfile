@@ -15,6 +15,8 @@ WORKDIR /go/src/github.com/mdouchement/risuto
 COPY . /go/src/github.com/mdouchement/risuto/
 # Dependencies
 RUN glide install
+# Download static assets
+RUN go run risuto.go fetch --min
 # Build assets
 RUN packr -z
 # Packr fix until the filename can be specified/prefix (packr init func must be executed first).
@@ -24,13 +26,13 @@ RUN ./build.sh
 
 
 # final stage
-FROM alpine:3.5
+FROM alpine:3.7
 MAINTAINER mdouchement
 
 ENV ECHO_ENV production
 ENV RISUTO_DATABASE /data/tiedot_db
 
-COPY --from=build-env /go/src/github.com/mdouchement/risuto/dist/linuxamd64/risuto /usr/local/bin/
+COPY --from=build-env /go/src/github.com/mdouchement/risuto/dist/linux_amd64/risuto /usr/local/bin/
 
 EXPOSE 5000
 CMD ["risuto", "server", "-p", "5000"]

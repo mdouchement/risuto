@@ -25,6 +25,10 @@ $ glide install
 - **development**
 
 ```bash
+# Download assets
+$ go run risuto.go fetch
+
+# Run app server
 $ make live-reload
 # old fashion
 $ go run risuto.go server -p 5000
