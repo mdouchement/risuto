@@ -15,6 +15,8 @@ WORKDIR /go/src/github.com/mdouchement/risuto
 COPY . /go/src/github.com/mdouchement/risuto/
 # Dependencies
 RUN glide install
+# Download static assets
+RUN go run risuto.go fetch --min
 # Build assets
 RUN packr -z
 # Packr fix until the filename can be specified/prefix (packr init func must be executed first).

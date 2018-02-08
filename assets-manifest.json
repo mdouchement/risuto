@@ -1,0 +1,15 @@
+{
+  "/assets/vendor/stylesheets/font-awesome.min.css": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
+  "/assets/vendor/fonts/FontAwesome.otf": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/FontAwesome.otf",
+  "/assets/vendor/fonts/fontawesome-webfont.eot": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot",
+  "/assets/vendor/fonts/fontawesome-webfont.svg": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg",
+  "/assets/vendor/fonts/fontawesome-webfont.ttf": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf",
+  "/assets/vendor/fonts/fontawesome-webfont.woff": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff",
+  "/assets/vendor/fonts/fontawesome-webfont.woff2": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2",
+  "/assets/vendor/javascripts/bluebird.core.min.js": "https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js",
+  "/assets/vendor/javascripts/clipboard.min.js": "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js",
+  "/assets/vendor/javascripts/axios.min.js": "https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js",
+  "/assets/vendor/javascripts/lodash.min.js": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js",
+  "/assets/vendor/javascripts/buefy.min.js": "https://unpkg.com/buefy@0.6.3/lib/index.js",
+  "/assets/vendor/javascripts/vue.min.js": "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"
+}
