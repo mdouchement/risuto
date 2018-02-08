@@ -14,13 +14,14 @@ import (
 type Item struct {
 	ID           string   `json:"id" structs:"id"`
 	Name         string   `json:"name" structs:"name"`
+	Category     string   `json:"category" structs:"category"`
 	Descriptions []string `json:"descriptions" structs:"descriptions"`
 	Score        int      `json:"score" structs:"score"`
 }
 
 var itemCol = config.DB.Use("items")
 
-// GetAllItems returns all existing entry of Dataset model from the database.
+// GetAllItems returns all existing entry of Item model from the database.
 func GetAllItems() []*Item {
 	items := []*Item{}
 	itemCol.ForEachDoc(func(id int, docContent []byte) (willMoveOn bool) {

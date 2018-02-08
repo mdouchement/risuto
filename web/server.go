@@ -77,6 +77,7 @@ func EchoEngine() *echo.Echo {
 	router.GET("/version", controllers.Version)
 	router.GET("/", controllers.IndexHome)
 	middlewares.CRUD(router, "/items", controllers.NewItems())
+	middlewares.CRUD(router, "/categories", controllers.NewCategories())
 
 	return engine
 }
