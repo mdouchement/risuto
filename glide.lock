@@ -7,6 +7,8 @@ imports:
   version: 54c75d3f96df71de343c9a2048f7623620352802
 - name: github.com/gobuffalo/envy
   version: e613c80275b86293880eddeb27417c9a7c670ff3
+- name: github.com/mitchellh/go-homedir
+  version: b8bc1bf767474819792c23f32d8286a45736f1c6
 - name: github.com/joho/godotenv
   version: a79fa1e548e2c689c241d10173efd51e5d689d5b
 - name: github.com/dgrijalva/jwt-go
