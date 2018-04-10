@@ -15,8 +15,7 @@ let app = new Vue({
     filter: '',
     categories: [],
     activeTab: 0,
-    items: [],
-    items_map: {}
+    items: {},
   },
   methods: {
     appendCategory: function(category) {
@@ -44,17 +43,11 @@ let app = new Vue({
     },
     appendItem: function(item, pos=-1, autoSwitchTab=true) {
       this.appendCategory(item.category)
-      if (this.items_map[item.category] === undefined) {
-        this.$set(this.items_map, item.category, [])
+      if (this.items[item.category] === undefined) {
+        this.$set(this.items, item.category, [])
       }
-      if (pos == -1) {
-        // New item
-        this.items_map[item.category].push(this.items.length)
-        this.items.push(item)
-      } else {
-        // Already added item
-        this.items_map[item.category].push(pos)
-      }
+      this.items[item.category].push(item)
+
 
       if (autoSwitchTab) {
         let self = this
@@ -65,14 +58,8 @@ let app = new Vue({
       }
     },
     removeItem: function(item) {
-      let pos = _.findIndex(this.items, item)
-      let i = _.findIndex(this.items_map[item.category], pos)
-      this.items_map[item.category].splice(i, 1)
-      // Sync mapping
-      _.each(this.categories, c => {
-        this.items_map[c] = _.map(this.items_map[c], cpos => cpos > pos ? cpos-1 : cpos)
-      })
-      this.items.splice(pos, 1)
+      let i = _.findIndex(this.items[item.category], item)
+      this.items[item.category].splice(i, 1)
       this.removeCategory(item.category)
     },
     getItems: function() {
@@ -84,11 +71,9 @@ let app = new Vue({
         }
       })
       .then(function(response) {
-        self.items = _.orderBy(response.data, ['score', 'name'], ['desc', 'asc'])
-        let pos = 0
-        _.each(self.items, i => {
-          self.appendItem(i, pos, false)
-          pos++
+        let items = _.orderBy(response.data, ['score', 'name'], ['desc', 'asc'])
+        _.each(items, i => {
+          self.appendItem(i, false)
         })
         self.categories = self.categories.sort()
       })
@@ -100,7 +85,7 @@ let app = new Vue({
   },
   computed: {
     itemPool: function() {
-      return _.map(this.items_map[this.categories[this.activeTab]], pos => this.items[pos])
+      return this.items[this.categories[this.activeTab]]
     },
     filteredItems: function() {
       bus.$emit('item-selected', 'collapse-all') // Force collapse all on search
