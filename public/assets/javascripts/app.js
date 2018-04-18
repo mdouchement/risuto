@@ -41,7 +41,7 @@ let app = new Vue({
     closeNewItem: function() {
       this.inNewItem = false
     },
-    appendItem: function(item, pos=-1, autoSwitchTab=true) {
+    appendItem: function(item, autoSwitchTab=true) {
       this.appendCategory(item.category)
       if (this.items[item.category] === undefined) {
         this.$set(this.items, item.category, [])
@@ -52,7 +52,6 @@ let app = new Vue({
       if (autoSwitchTab) {
         let self = this
         _.delay(item => {
-          // FIXME generates glitches in UI on new fresh category
           self.activeTab = _.indexOf(self.categories, item.category) // Auto-switch tab
         }, 200, item)
       }
@@ -84,6 +83,14 @@ let app = new Vue({
     }
   },
   computed: {
+    filterDebounced: {
+      get: function() {
+        return this.filter
+      },
+      set: _.debounce(function(filter) {
+        this.filter = filter
+      }, 500)
+    },
     itemPool: function() {
       return this.items[this.categories[this.activeTab]]
     },

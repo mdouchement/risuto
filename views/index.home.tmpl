@@ -10,7 +10,7 @@
             <div class="navbar-menu">
               <div class="navbar-end">
                 <button type="button" class="button" v-on:click="newItem()">+</button>
-                <input class="input no-border-radius" v-model="filter" type="search" placeholder="Search">
+                <input class="input no-border-radius" v-model="filterDebounced" type="search" placeholder="Search">
               </div>
             </div>
           </div>
