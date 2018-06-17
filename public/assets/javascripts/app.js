@@ -106,7 +106,7 @@ let app = new Vue({
       },
       set: _.debounce(function(filter) {
         this.filter = filter
-      }, 500)
+      }, 250)
     },
     filteredItems: function() {
       bus.$emit('item-selected', 'collapse-all') // Force collapse all on search
