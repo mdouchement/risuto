@@ -16,8 +16,8 @@ Simple wishlist web application
 
 ```bash
 $ go get -u github.com/gobuffalo/packr/...
-$ go get github.com/Masterminds/glide
-$ glide install
+$ curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+$ dep ensure
 ```
 
 ## Usage

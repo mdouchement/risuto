@@ -1,11 +1,11 @@
 # build stage
-FROM golang:1.9-alpine as build-env
+FROM golang:1.10-alpine as build-env
 MAINTAINER mdouchement
 
 RUN apk upgrade
 RUN apk add --update --no-cache git curl
 
-RUN go get github.com/Masterminds/glide
+RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 RUN go get github.com/gobuffalo/packr/packr
 RUN cd /usr/local/bin && \
     curl -SL https://github.com/goreleaser/goreleaser/releases/download/v0.66.1/goreleaser_Linux_x86_64.tar.gz | tar xz && \
@@ -16,7 +16,7 @@ WORKDIR /go/src/github.com/mdouchement/risuto
 
 COPY . /go/src/github.com/mdouchement/risuto/
 # Dependencies
-RUN glide install
+RUN dep ensure -v
 # Download static assets
 RUN go run risuto.go fetch --min
 # Build assets
