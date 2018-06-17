@@ -61,7 +61,7 @@ func (is *Items) Create(c echo.Context) error {
 func (is *Items) List(c echo.Context) error {
 	c.Set("handler_method", "List")
 
-	return c.JSON(http.StatusOK, models.GetAllItems())
+	return c.JSON(http.StatusOK, models.GetAllFilteredItems(c.QueryParam("category")))
 }
 
 // Update implements REST inteface.
