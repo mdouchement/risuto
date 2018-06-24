@@ -51,8 +51,8 @@ func (is *Items) Create(c echo.Context) error {
 		return err
 	}
 
-	// Synchronize category collection
-	models.IncrementCategory(item.Category)
+	// Synchronize category collection and items' index
+	models.IndexItem(item)
 
 	return c.JSON(http.StatusCreated, item)
 }
@@ -85,10 +85,10 @@ func (is *Items) Update(c echo.Context) error {
 		return err
 	}
 
-	// Synchronize category collection
-	if params.Category != item.Category {
-		models.IncrementCategory(params.Category)
-		models.DecrementCategory(item.Category)
+	// Synchronize category collection and items' index
+	updateIndex := params.Category != item.Category
+	if updateIndex {
+		models.DeindexItem(item)
 	}
 
 	// Update attributes
@@ -97,6 +97,11 @@ func (is *Items) Update(c echo.Context) error {
 	}
 	if err := item.Save(); err != nil {
 		return err
+	}
+
+	// Synchronize category collection
+	if updateIndex {
+		models.IndexItem(item)
 	}
 
 	return c.JSON(http.StatusOK, item)
@@ -115,8 +120,8 @@ func (is *Items) Delete(c echo.Context) error {
 		return err
 	}
 
-	// Synchronize category collection
-	models.DecrementCategory(item.Category)
+	// Synchronize category collection and items' index
+	models.DeindexItem(item)
 
 	return c.NoContent(http.StatusNoContent)
 }

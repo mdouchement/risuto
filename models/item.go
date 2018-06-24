@@ -41,16 +41,15 @@ func GetAllFilteredItems(category string) []*Item {
 	}
 
 	items := []*Item{}
-	itemCol.ForEachDoc(func(id int, docContent []byte) (willMoveOn bool) {
-		var item Item
-		json.Unmarshal(docContent, &item)
-		if item.Category != category {
-			return true // Continue to next item
-		}
-		item.ID = fmt.Sprintf("%d", id)
-		items = append(items, &item)
-		return true
-	})
+	if len(cats.index[category]) == 0 {
+		return items
+	}
+
+	for id := range cats.index[category] {
+		item, _ := GetItem(id) // Ignore errors
+		items = append(items, item)
+	}
+
 	return items
 }
 

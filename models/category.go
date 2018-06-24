@@ -1,20 +1,23 @@
 package models
 
-import "sync"
+import (
+	"sync"
+)
 
 type categories struct {
 	sync.Mutex
-	values map[string]int
+	index map[string]map[string]struct{}
 }
 
 var cats categories
 
 func init() {
 	cats = categories{
-		values: map[string]int{},
+		index: map[string]map[string]struct{}{},
 	}
+
 	for _, item := range GetAllItems() {
-		cats.values[item.Category]++
+		IndexItem(item)
 	}
 }
 
@@ -24,28 +27,35 @@ func GetAllCategories() []string {
 	defer cats.Unlock()
 
 	cs := []string{}
-	for c := range cats.values {
+	for c := range cats.index {
 		cs = append(cs, c)
 	}
 
 	return cs
 }
 
-// IncrementCategory increments the given category to the database.
-func IncrementCategory(c string) {
+// IndexItem indexs the given item according to its category to the database.
+func IndexItem(item *Item) {
 	cats.Lock()
 	defer cats.Unlock()
 
-	cats.values[c]++
+	if cats.index[item.Category] == nil {
+		cats.index[item.Category] = map[string]struct{}{}
+	}
+	cats.index[item.Category][item.ID] = struct{}{}
 }
 
-// DecrementCategory decrements or removes the given category to the database.
-func DecrementCategory(c string) {
+// DeindexItem removes the given item from the index in the database.
+func DeindexItem(item *Item) {
 	cats.Lock()
 	defer cats.Unlock()
 
-	cats.values[c]--
-	if cats.values[c] == 0 {
-		delete(cats.values, c)
+	if cats.index[item.Category] == nil {
+		return
+	}
+	delete(cats.index[item.Category], item.ID)
+
+	if len(cats.index[item.Category]) == 0 {
+		delete(cats.index, item.Category)
 	}
 }
