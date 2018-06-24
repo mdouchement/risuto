@@ -36,12 +36,15 @@ func GetAllItems() []*Item {
 
 // GetAllFilteredItems returns all existing entry of Item model from the database matching on the given param.
 func GetAllFilteredItems(category string) []*Item {
+	if category == "" {
+		return GetAllItems()
+	}
+
 	items := []*Item{}
-	isFiltered := category != ""
 	itemCol.ForEachDoc(func(id int, docContent []byte) (willMoveOn bool) {
 		var item Item
 		json.Unmarshal(docContent, &item)
-		if isFiltered && item.Category != category {
+		if item.Category != category {
 			return true // Continue to next item
 		}
 		item.ID = fmt.Sprintf("%d", id)
