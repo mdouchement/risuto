@@ -34,6 +34,25 @@ func GetAllItems() []*Item {
 	return items
 }
 
+// GetAllFilteredItems returns all existing entry of Item model from the database matching on the given param.
+func GetAllFilteredItems(category string) []*Item {
+	if category == "" {
+		return GetAllItems()
+	}
+
+	items := []*Item{}
+	if len(cats.index[category]) == 0 {
+		return items
+	}
+
+	for id := range cats.index[category] {
+		item, _ := GetItem(id) // Ignore errors
+		items = append(items, item)
+	}
+
+	return items
+}
+
 // GetItem returns a new instance of Item model from the database for the given id.
 func GetItem(id string) (*Item, error) {
 	doc, err := itemCol.Read(util.MustAtoi(id))

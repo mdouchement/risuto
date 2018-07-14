@@ -8,14 +8,14 @@ let app = new Vue({
   el: '#app',
   delimiters: ['${', '}'],
   mounted: function() {
-    this.getItems()
+    this.getCategories()
   },
   data: {
     inNewItem: false,
     filter: '',
     categories: [],
     activeTab: 0,
-    items: {},
+    items: [],
   },
   methods: {
     appendCategory: function(category) {
@@ -31,6 +31,23 @@ let app = new Vue({
       //   this.activeTab = 0
       // }
     },
+    getCategories: function() {
+      let self = this
+      axios.get('/categories', {
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        self.categories = response.data.sort()
+        self.getItems()
+      })
+      .catch(error => {
+        console.log(error)
+        alert(error)
+      })
+    },
     clearFilter: function() {
       this.filter = ''
     },
@@ -43,10 +60,7 @@ let app = new Vue({
     },
     appendItem: function(item, autoSwitchTab=true) {
       this.appendCategory(item.category)
-      if (this.items[item.category] === undefined) {
-        this.$set(this.items, item.category, [])
-      }
-      this.items[item.category].push(item)
+      this.items.push(item)
 
 
       if (autoSwitchTab) {
@@ -57,26 +71,29 @@ let app = new Vue({
       }
     },
     removeItem: function(item) {
-      let i = _.findIndex(this.items[item.category], item)
-      this.items[item.category].splice(i, 1)
+      let i = _.findIndex(this.items, item)
+      this.items.splice(i, 1)
       this.removeCategory(item.category)
+    },
+    refreshItems: function() {
+      this.items = []
+      this.getItems()
     },
     getItems: function() {
       let self = this
-      axios.get('/items', {
+      axios.get('/items?category='+self.categories[self.activeTab], {
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json'
         }
       })
-      .then(function(response) {
+      .then(response => {
         let items = _.orderBy(response.data, ['score', 'name'], ['desc', 'asc'])
         _.each(items, i => {
           self.appendItem(i, false)
         })
-        self.categories = self.categories.sort()
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error)
         alert(error)
       })
@@ -89,15 +106,15 @@ let app = new Vue({
       },
       set: _.debounce(function(filter) {
         this.filter = filter
-      }, 500)
-    },
-    itemPool: function() {
-      return this.items[this.categories[this.activeTab]]
+      }, 250)
     },
     filteredItems: function() {
       bus.$emit('item-selected', 'collapse-all') // Force collapse all on search
+      if (this.filter === "") {
+        return this.items
+      }
       let filter = _.toLower(this.filter)
-      return _.filter(this.itemPool, i => _.startsWith(_.toLower(i.name), filter))
+      return _.filter(this.items, i => i.name.toLowerCase().includes(filter))
     }
   }
 })

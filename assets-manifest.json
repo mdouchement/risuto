@@ -8,8 +8,8 @@
   "/assets/vendor/fonts/fontawesome-webfont.woff2": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2",
   "/assets/vendor/javascripts/bluebird.core.min.js": "https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js",
   "/assets/vendor/javascripts/clipboard.min.js": "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js",
-  "/assets/vendor/javascripts/axios.min.js": "https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js",
-  "/assets/vendor/javascripts/lodash.min.js": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js",
-  "/assets/vendor/javascripts/buefy.min.js": "https://unpkg.com/buefy@0.6.3/lib/index.js",
-  "/assets/vendor/javascripts/vue.min.js": "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"
+  "/assets/vendor/javascripts/axios.min.js": "https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js",
+  "/assets/vendor/javascripts/lodash.min.js": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js",
+  "/assets/vendor/javascripts/buefy.min.js": "https://unpkg.com/buefy@0.6.6/lib/index.js",
+  "/assets/vendor/javascripts/vue.min.js": "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"
 }
