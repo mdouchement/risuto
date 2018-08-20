@@ -10,7 +10,6 @@ import (
 type (
 	Items      []*models.Item
 	itemParams struct {
-		ResourceName string   `json:"-"` // Used for error formating
 		Name         string   `json:"name" valid:"required~required"`
 		Category     string   `json:"category" valid:"required~required"`
 		Descriptions []string `json:"descriptions" structs:"descriptions"`
@@ -19,7 +18,7 @@ type (
 )
 
 func (p *itemParams) RName() string {
-	return p.ResourceName
+	return "item"
 }
 
 func NewItems() *Items {
@@ -34,7 +33,6 @@ func (is *Items) Create(c echo.Context) error {
 	if err := c.Bind(&params); err != nil {
 		return err
 	}
-	params.ResourceName = "item" // Needed for validation
 
 	if err := c.Validate(&params); err != nil {
 		return err
@@ -73,7 +71,6 @@ func (is *Items) Update(c echo.Context) error {
 	if err := c.Bind(&params); err != nil {
 		return err
 	}
-	params.ResourceName = "item" // Needed for validation
 
 	if err := c.Validate(&params); err != nil {
 		return err
