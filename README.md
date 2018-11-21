@@ -10,7 +10,7 @@ Simple wishlist web application
 
 ## Requirements
 
-- Golang 1.9.x
+- Golang 1.11.x
 
 ## Installation
 

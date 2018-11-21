@@ -46,7 +46,7 @@ func (o *vueJSMinifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[stri
 			lineTerminatorQueued = true
 		} else if tt == js.WhitespaceToken {
 			whitespaceQueued = true
-		} else if tt == js.CommentToken {
+		} else if tt == js.SingleLineCommentToken {
 			if len(data) > 5 && data[1] == '*' && data[2] == '!' {
 				if _, err := w.Write(data[:3]); err != nil {
 					return err
