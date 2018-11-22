@@ -18,7 +18,7 @@ import (
 	"github.com/tdewolff/minify/json"
 	"github.com/tdewolff/minify/svg"
 	"github.com/tdewolff/minify/xml"
-	"gopkg.in/urfave/cli.v2"
+	cli "gopkg.in/urfave/cli.v2"
 )
 
 var (
@@ -125,8 +125,16 @@ func assetsFS(urlPrefix string, assets packr.Box) echo.MiddlewareFunc {
 }
 
 func printRoutes(e *echo.Echo) {
+	ignored := map[string]bool{
+		".":  true,
+		"/*": true,
+	}
+
 	fmt.Println("Routes:")
 	for _, route := range e.Routes() {
+		if ignored[route.Path] {
+			continue
+		}
 		fmt.Printf("%6s %s\n", route.Method, route.Path)
 	}
 }

@@ -1,11 +1,10 @@
 # build stage
-FROM golang:1.10-alpine as build-env
+FROM golang:1.11-alpine as build-env
 MAINTAINER mdouchement
 
 RUN apk upgrade
-RUN apk add --update --no-cache git curl
+RUN apk add --update --no-cache alpine-sdk git curl
 
-RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 RUN go get github.com/gobuffalo/packr/packr
 RUN cd /usr/local/bin && \
     curl -SL https://github.com/goreleaser/goreleaser/releases/download/v0.66.1/goreleaser_Linux_x86_64.tar.gz | tar xz && \
@@ -14,21 +13,24 @@ RUN cd /usr/local/bin && \
 RUN mkdir -p /go/src/github.com/mdouchement/risuto
 WORKDIR /go/src/github.com/mdouchement/risuto
 
+ENV CGO_ENABLED 0
+ENV GO111MODULE on
+
 COPY . /go/src/github.com/mdouchement/risuto/
 # Dependencies
-RUN dep ensure -v
+RUN go mod download
 # Download static assets
 RUN go run risuto.go fetch --min
 # Build assets
 RUN packr -z
 # Packr fix until the filename can be specified/prefix (packr init func must be executed first).
-RUN mv web/web-packr.go web/assets-packr.go
+RUN mv web/a_web-packr.go web/assets-packr.go
 # Go build
 RUN ./build.sh
 
 
 # final stage
-FROM alpine:3.7
+FROM alpine:3.8
 MAINTAINER mdouchement
 
 ENV ECHO_ENV production
