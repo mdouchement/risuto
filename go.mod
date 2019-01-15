@@ -11,7 +11,7 @@ require (
 	github.com/gobuffalo/syncx v0.0.0-20181120194010-558ac7de985f
 	github.com/joho/godotenv v1.3.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.1
-	github.com/labstack/echo v0.0.0-20181106020225-2e9f4ea4e010
+	github.com/labstack/echo v3.3.5+incompatible
 	github.com/labstack/gommon v0.2.8
 	github.com/markbates/oncer v0.0.0-20181014194634-05fccaae8fc4
 	github.com/mattn/go-colorable v0.0.9
