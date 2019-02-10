@@ -9,7 +9,6 @@
     {{range $key, $value := .vendor_styles}}
     <link rel="stylesheet" href="{{$key}}?hash={{index $.checksums $value}}">
     {{end}}
-    <link rel="stylesheet" href="/assets/stylesheets/buefy.min.css?hash={{index .checksums "buefy_min_css"}}">
     <link rel="stylesheet" href="/assets/stylesheets/app.css?hash={{index .checksums "app_css"}}">
   </head>
 
