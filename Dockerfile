@@ -5,7 +5,10 @@ MAINTAINER mdouchement
 RUN apk upgrade
 RUN apk add --update --no-cache alpine-sdk git curl
 
-RUN go get github.com/gobuffalo/packr/packr
+RUN cd /usr/local/bin && \
+    curl -SL https://github.com/gobuffalo/packr/releases/download/v1.22.0/packr_1.22.0_linux_amd64.tar.gz | tar xv && \
+    chmod +x packr
+
 RUN cd /usr/local/bin && \
     curl -SL https://github.com/goreleaser/goreleaser/releases/download/v0.66.1/goreleaser_Linux_x86_64.tar.gz | tar xz && \
     chmod +x goreleaser
@@ -30,7 +33,7 @@ RUN ./build.sh
 
 
 # final stage
-FROM alpine:3.8
+FROM alpine
 MAINTAINER mdouchement
 
 ENV ECHO_ENV production

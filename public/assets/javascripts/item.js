@@ -78,7 +78,7 @@ Vue.component('item', {
   watch: {
     isOpen: function(active) {
       if (this.clipboard === null) {
-        this.clipboard = new Clipboard('#' + this.copyButtonID) // Only on-demand
+        this.clipboard = new ClipboardJS('#' + this.copyButtonID) // Only on-demand
       }
 
       if (active) {
