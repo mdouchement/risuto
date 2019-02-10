@@ -6,7 +6,7 @@ RUN apk upgrade
 RUN apk add --update --no-cache alpine-sdk git curl
 
 RUN cd /usr/local/bin && \
-    curl -SL https://github.com/gobuffalo/packr/releases/download/v1.22.0/packr_1.22.0_linux_amd64.tar.gz | tar xv && \
+    curl -SL https://github.com/gobuffalo/packr/releases/download/v1.22.0/packr_1.22.0_linux_amd64.tar.gz | tar xz && \
     chmod +x packr
 
 RUN cd /usr/local/bin && \
